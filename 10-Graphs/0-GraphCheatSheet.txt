@@ -1,0 +1,29 @@
+GRAPH PATTERNS
+
+Start with basic representation methods - adj_list, matrix 
+Refer intro graphs for that
+
+Then move on the basic BFS, DFS then, matrix version of BFS and DFS
+
+Then Go through the neetcode 150 list
+Try island perimeter -> no of islands -> max area of island -> large island (IN this order!!)
+Starting from walls and gates, rotting oranges -> learn Multi Source BFS
+
+Then do toplogical sort - DFS & Kahn's algo
+Do Coursch 1,2,4
+
+kahn algo pattern + reverse the edges (Think from the destination) - course sch1 & 2 then do lc 802, 1059
+
+FOR DSU, it's undirected graphs so, check if the graph is undirected
+Then Learn DSU(Disjoint set union)
+last 3 questions are direct DSU
+
+So, now jump into DSU PATTERNS
+Try power grid maintaince lc 3067 then do account merge
+This pattern - after DSU, take a hashMap[root] -> nodes
+Find root by using DSU.find(root)
+no of entries in hashMap represents no of connected componenets
+
+Always, shortest path without weights -> Go for BFS
+
+Also, TRY some questions like BiPartition(lc 886)[Good Question], Open the lock(lc 752)
