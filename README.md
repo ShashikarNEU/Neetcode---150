@@ -1,8 +1,8 @@
-# NeetCode 150 — DSA Solutions in Java
+# NeetCode 150 — DSA Solutions in Python
 
 A structured collection of solutions to the [NeetCode 150](https://neetcode.io/practice) problem set — one of the most curated lists for mastering Data Structures & Algorithms for technical interviews at top tech companies.
 
-All solutions are written in **Java**, organized by topic, with clean and readable code prioritizing clarity and pattern recognition.
+All solutions are written in **Python**, organized by topic, with clean and readable code prioritizing clarity and pattern recognition.
 
 ---
 
@@ -39,7 +39,7 @@ The NeetCode 150 is widely considered the gold standard for interview prep at FA
 
 ## How to Use
 
-Each folder corresponds to a topic. Inside, you'll find individual `.java` files, one per problem, named after the LeetCode problem title.
+Each folder corresponds to a topic. Inside, you'll find individual `.py` files named by LeetCode problem number and title (e.g. `1-TwoSum.py`, `217-containsDuplicate.py`).
 
 ```bash
 git clone https://github.com/ShashikarNEU/Neetcode---150.git
@@ -47,20 +47,18 @@ cd Neetcode---150
 
 # Navigate to a topic
 cd 1-Arrays_and_Hashing
+
+# Run a solution
+python 1-TwoSum.py
 ```
 
 ---
 
 ## Setup
 
-- **Language**: Java (JDK 17+)
-- **IDE**: VS Code with Java Extension Pack (`.vscode/` config included)
-- No build system required — each file is standalone and can be compiled/run directly
-
-```bash
-javac SomeProblem.java
-java SomeProblem
-```
+- **Language**: Python 3.10+
+- **IDE**: VS Code (`.vscode/` config included)
+- No dependencies or build system required — each file is standalone
 
 ---
 
