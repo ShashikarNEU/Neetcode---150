@@ -1,3 +1,4 @@
+from ast import List
 from collections import defaultdict
 # https://neetcode.io/solutions/next-greater-element-i
 
@@ -32,25 +33,22 @@ class Solution:
 # After finishing the loop in num2, some items will be left in the stack. Go through them and if they appear in  num1, find index, put value as -1 since there is no next element
 # instead of putting -1 in the last, we can declare res array with -1 for everything in the start[CLEVER]
 class Solution:
-    def nextGreaterElement(self, nums1: list[int], nums2: list[int]) -> list[int]:
+    def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
         hashTable = defaultdict(int)
-        for i in range(len(nums1)):
-            hashTable[nums1[i]] = i
+        for i,num in enumerate(nums1):
+            hashTable[num] = i
         
-        res = [0]*len(nums1)
         stack = []
+        res = [-1]*len(nums1)
+        
         for i in range(len(nums2)):
-            while stack and nums2[i] > stack[-1]:
-                num = stack.pop()
-                index = hashTable[num]
+            while stack and stack[-1] < nums2[i]:
+                popped_no = stack.pop()
+                index = hashTable[popped_no]
                 res[index] = nums2[i]
             
             if nums2[i] in hashTable:
                 stack.append(nums2[i])
-        
-        for num in stack:
-            index = hashTable[num]
-            res[index] = -1
         
         return res
             

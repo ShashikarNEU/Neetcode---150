@@ -7,31 +7,33 @@
 # even if there are # in list of strings, it won't matter since we can skip them
 # https://neetcode.io/solutions/encode-and-decode-strings
 
+from ast import List
 class Codec:
-    def encode(self, strs: list[str]) -> str:
+    def encode(self, strs: List[str]) -> str:
         """Encodes a list of strings to a single string.
         """
-        res = ""
-        for string in strs:
-            res += str(len(string)) + "#" + string
-        return res
-        
+        encodedWord = ""
+        for st in strs:
+            l = len(st)
+            occurance = str(l) + "#"
+            encodedWord += occurance
+            encodedWord += st
+        return encodedWord
 
     def decode(self, s: str) -> list[str]:
         """Decodes a single string to a list of strings.
         """
-        res = []
+        result = []
         i = 0
         while i < len(s):
-            length = ""
-            while s[i]!='#':
-                length += s[i]
+            num = ""
+            while s[i] != '#':
+                num += s[i]
                 i+=1
-            k = int(length)
-            i+=1
-            res.append(s[i:i+k])
-            i+=(k)
-        return res
+            k = int(num)
+            result.append(s[i+1:i+1+k])
+            i = i+1+k
+        return result
 
 # Your Codec object will be instantiated and called as such:
 # codec = Codec()

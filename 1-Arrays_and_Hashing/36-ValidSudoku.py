@@ -3,47 +3,41 @@
 # For checking 3*3 grids of the sudoku, classify (0,8) -> i and (0,8) -> j into (0,2)(0,2) hashTable, value of the hashTable is a set
 # so, youy will have 9 sets. keys of the hashTable are (row//3,col//3) not % but //. when encountering . skip it(continue).
 
+from ast import List
 from collections import defaultdict
 class Solution:
-    def isValidSudoku(self, board: list[list[str]]) -> bool:
-      ROW = len(board)
-      COL = len(board[0])
-
-      # For checking rows
-      for i in range(ROW):
-         # Hashset for checking duplicates in each row
-         hashSetRow = set()
-         for j in range(COL):
-            if board[i][j] == '.':
-               continue
-            if board[i][j] in hashSetRow:
-               return False
-            hashSetRow.add(board[i][j])
-      
-      # For checking cols
-      for j in range(COL):
-         # Hashset for checking duplicates in each row
-         hashSetCol = set()
-         for i in range(ROW):
-            if board[i][j] == '.':
-               continue
-            if board[i][j] in hashSetCol:
-               return False
-            hashSetCol.add(board[i][j])
-      
-      # For checking 3*3 grids
-      hashTable = defaultdict(set)
-      for i in range(ROW):
-         for j in range(COL):
-            if board[i][j] == '.':
-               continue
-            r = i//3
-            c = j//3
-            if board[i][j] in hashTable[(r,c)]:
-               return False
-            hashTable[(r,c)].add(board[i][j])
-      
-      return True
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        ROW = len(board)
+        COL = len(board[0])
+        
+        # CHECKING ROW WISE
+        for r in range(ROW):
+            rowSet = set()
+            for c in range(COL):
+                if board[r][c] != '.':
+                    if board[r][c] in rowSet:
+                        return False
+                    rowSet.add(board[r][c])
+        
+        # CHECKING COL WISE
+        for c in range(COL):
+            colSet = set()
+            for r in range(ROW):
+                if board[r][c] != '.':
+                    if board[r][c] in colSet:
+                        return False
+                    colSet.add(board[r][c])
+        
+        # CHECKING 9*9 SIZE
+        hashSet = [[set() for _ in range(3)] for _ in range(3)]
+        for r in range(ROW):
+            for c in range(COL):
+                if board[r][c] != '.':
+                    if board[r][c] in hashSet[r//3][c//3]:
+                        return False
+                    hashSet[r//3][c//3].add(board[r][c])
+        
+        return True
 
 class Solution:
     def isValidSudoku(self, board: list[list[str]]) -> bool:

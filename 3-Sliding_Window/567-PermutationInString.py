@@ -24,26 +24,33 @@ class Solution:
 # Using arr instead of hashTable
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        arrS1 = [0]*26
-        for i in range(len(s1)):
-            index = ord(s1[i])-ord('a')
-            arrS1[index]+=1
+        arr_s1 = [0]*26
+        for s in s1:
+            index = ord(s) - ord('a')
+            arr_s1[index] += 1
+        
+        arr_s2 = [0]*26
         k = len(s1)
         n = len(s2)
+        
         if k > n:
             return False
-        arrS2 = [0]*26
-        for i in range(k):
-            index = ord(s2[i])-ord('a')
-            arrS2[index]+=1
         
-        if arrS1 == arrS2:
+        for i in range(k):
+            index = ord(s2[i]) - ord('a')
+            arr_s2[index] += 1
+        
+        if arr_s1 == arr_s2:
             return True
-
-        for i in range(len(s2)-k):
-            arrS2[ord(s2[i])-ord('a')]-=1
-            arrS2[ord(s2[i+k])-ord('a')]+=1
-            if arrS1 == arrS2:
+        
+        for i in range(n-k):
+            index_remove = ord(s2[i]) - ord('a')
+            index_add = ord(s2[i+k]) - ord('a')
+            
+            arr_s2[index_remove] -= 1
+            arr_s2[index_add] += 1
+            
+            if arr_s1 == arr_s2:
                 return True
         
         return False

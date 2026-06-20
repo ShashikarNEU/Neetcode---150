@@ -6,6 +6,7 @@
 
 # Edge cases: there can be matrix[middle][0] == target or matrix[middle][-1] == target, instead of writing long lines, just use else
 # After finding result row(row where the ans is), break the loop
+from typing import List
 class Solution:
     def searchMatrix(self, matrix: list[list[int]], target: int) -> bool:
         ROW = len(matrix)
@@ -49,37 +50,39 @@ class Solution:
 
 # Other Attempt
 class Solution:
-    def searchMatrix(self, matrix: list[list[int]], target: int) -> bool:
-        start = 0
-        end = len(matrix)-1
-        col_len = len(matrix[0])-1
-        res_row = -1
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        # Finding the row
+        low = 0
+        high = len(matrix)-1
 
-        while start <= end:
-            middle = (start+end) // 2
+        len_col = len(matrix[0])-1
+        result_row = 0
 
-            if matrix[middle][0] > target and matrix[middle][col_len] > target:
-                end = middle - 1
-            elif matrix[middle][0] < target and matrix[middle][col_len] < target:
-                start = middle + 1
+        while low <= high:
+            mid = (low+high) // 2
+
+            if matrix[mid][0] > target:
+                high = mid -1
+            elif matrix[mid][len_col] < target:
+                low = mid+1
             else:
-                res_row = middle
+                result_row = mid
                 break
         
-        if res_row == -1:
-            return False
-        
-        res_start = 0
-        res_end = col_len
-        while res_start <= res_end:
-            middle = (res_start+res_end)//2
-            if matrix[res_row][middle] == target:
-                return True
-            elif matrix[res_row][middle] > target:
-                res_end = middle - 1
-            elif matrix[res_row][middle] < target:
-                res_start = middle + 1
+        # Finding the element within that row
+        low = 0
+        high = len_col
 
+        while low <= high:
+            mid = (low+high)//2
+
+            if matrix[result_row][mid] > target:
+                high = mid - 1
+            elif matrix[result_row][mid] < target:
+                low = mid + 1
+            else:
+                return True
+        
         return False
 
 if __name__ == "__main__":

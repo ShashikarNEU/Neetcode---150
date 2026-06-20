@@ -43,17 +43,21 @@ class Solution:
         p1 = 0
         p2 = 0
         hashTable = defaultdict(int)
+        length = 0
         maxLength = 0
-        max_value = 0
 
         while p2 < len(s):
-            hashTable[s[p2]]+=1
-            max_value = max(hashTable.values()) 
-            while p2-p1+1-max_value > k:
+            hashTable[s[p2]]+=1 
+            maxOcc = max(hashTable.values())
+            
+            while p2 - p1 + 1 - maxOcc > k:
                 hashTable[s[p1]]-=1
-                p1+=1
-            maxLength = max(maxLength, p2-p1+1)
+                p1 += 1
+            
+            length = p2-p1+1
+            maxLength = max(maxLength, length)
             p2+=1
+        
         return maxLength
         
           

@@ -1,5 +1,6 @@
 # Brute force -> O(n2) time
 # convert it into set, for every number I am checking for a seq and recording the longest sequence
+from ast import List
 class Solution:
     def longestConsecutive(self, nums: list[int]) -> int:
         hashSet = set(nums) # to access elements in O(1) time
@@ -40,20 +41,25 @@ class Solution:
 # you find the start of the sequence by checking if the i-1 does not exist in the set
 # remove duplicates because they don't affect the soln so, iterate over a set
 class Solution:
-    def longestConsecutive(self, nums: list[int]) -> int:
-        hashSet = set(nums) # to access elements in O(1) time
-        count = 1
-        result = 0
-        for i in hashSet:
-             if i-1 in hashSet:
-              continue
-             else:
-                while i+1 in hashSet:
-                  count+=1
-                  i+=1
-                result = max(result, count)
-                count = 1
-        return result
+    def longestConsecutive(self, nums: List[int]) -> int:
+        hashSet = set(nums)
+        maxLength = float('-inf')
+
+        if nums == []:
+            return 0
+
+        for num in hashSet:
+            if num-1 in hashSet:
+                continue
+            
+            length = 1
+            while num+1 in hashSet:
+                num = num+1
+                length+=1
+            
+            maxLength = max(maxLength, length)
+        
+        return maxLength
     
 # CODING TRICKS
 # for while loop, when you can't think of a exit condn

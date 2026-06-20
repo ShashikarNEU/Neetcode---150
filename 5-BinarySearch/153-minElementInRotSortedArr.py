@@ -12,6 +12,7 @@
 
 # for the Base case, compare middle with middle+1, if it's middle is greater, then return num[middle+1]
 # (if nums[middle] >= nums[middle + 1])
+from typing import List
 class Solution:
     def findMin(self, nums: list[int]) -> int:
         low = 0
@@ -36,26 +37,25 @@ class Solution:
 
 # Other Attempt
 class Solution:
-    def findMin(self, nums: list[int]) -> int:
-        start = 0
-        end = len(nums)-1
+    def findMin(self, nums: List[int]) -> int:
+        low = 0
+        high = len(nums)-1
 
-        # Length = 1, edge case
-        if len(nums) == 1:
-            return nums[0]
+        if len(nums)==1:
+            return nums[low]
 
-        # no rotation exists
-        if nums[start] < nums[end]:
-            return nums[start]
+        if nums[low] < nums[high]:
+            return nums[low]
+        
+        while low < high:
+            mid = (low+high)//2
 
-        while start < end:
-            middle = (start+end)//2
-            if nums[middle] > nums[start] and nums[middle] > nums[end]:
-                start = middle
-            elif nums[middle] < nums[start] and nums[middle] < nums[end]:
-                end = middle
-            elif nums[middle] > nums[middle+1]:
-                return nums[middle+1]
+            if nums[mid] > nums[mid+1]:
+                return nums[mid+1]
+            elif nums[mid] < nums[low]:
+                high = mid 
+            elif nums[mid] > nums[low]:
+                low = mid 
         
         return -1
 

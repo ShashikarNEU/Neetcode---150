@@ -11,6 +11,7 @@
 # Don't use append fn, use append internally, because n time for every append fn call
 
 # Definition for singly-linked list.
+from typing import Optional
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
@@ -55,38 +56,38 @@ class Solution:
             
         return head.next
 
-# Other Attempt
+# Other Attempt(better written code)
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
 class Solution:
-    def mergeTwoLists(self, list1, list2):
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
         t3 = ListNode(-1)
-        head = t3
-
+        dummy = t3
         t1 = list1
         t2 = list2
 
-        while t1 or t2:
-            if t1 and t2:
-                if t1.val <= t2.val:
-                    t3.next = t1
-                    t3 = t1
-                    t1 = t1.next
-                else:
-                    t3.next = t2
-                    t3 = t2
-                    t2 = t2.next
-            elif t1 and not t2:
-                t3.next  = t1
-                break
-            elif t2 and not t1:
+        while t1 != None or t2 != None:
+            if t1 and t2 and t1.val >= t2.val:
                 t3.next = t2
-                break
+                t3 = t2
+                t2 = t2.next
+            elif t1 and t2 and t1.val < t2.val:
+                t3.next = t1
+                t3 = t1
+                t1 = t1.next
+            elif not t1 and t2:
+                t3.next = t2
+                t3 = t2
+                t2 = None
+            elif not t2 and t1:
+                t3.next = t1
+                t3 = t1
+                t1 = None
         
-        return head.next 
+        return dummy.next
 
 if __name__ == "__main__":
     s = Solution()

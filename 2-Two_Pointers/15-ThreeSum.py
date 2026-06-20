@@ -1,6 +1,7 @@
 # Think this question in two pointers way
 # since brute force is n3, we can sort for free(n2)
 # then apply for-loop and inside that for-loop, sorted two sum
+from ast import List
 class Solution:
     def threeSum(self, nums: list[int]) -> list[list[int]]:
         result = set()
@@ -19,33 +20,43 @@ class Solution:
                     p2-=1
         return [list(i) for i in result] # set of tuples to list of list
 
+# This is the solution that you should be aiming for
+# you will forget about duplicates, so recall about that
+# and for skipping duplicates, you have to be to concerned with it only when adding to the result arr(when sum == 0 case)
+# because that's the case, we will add duplicates to the res arr. you also need to skip duplicates on the outer loop also 
+# so that we won't do the same work again. For sum < 0, sum > 0, duplicates don't matter because we are not adding them to res arr
+# We will manually check them one by one
 class Solution:
-    def threeSum(self, nums: list[int]) -> list[list[int]]:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
         nums.sort()
-        res: list[list[int]] = []
-        n = len(nums)
-        
-        for i in range(n):
-            if i > 0 and nums[i] == nums[i - 1]:
+        result = []
+
+        for i in range(len(nums)):
+            if i > 0 and nums[i] == nums[i-1]:
                 continue
             
-            left, right = i + 1, n - 1
-            while left < right:
-                s = nums[i] + nums[left] + nums[right]
-                if s < 0:
-                    left += 1
-                elif s > 0:
-                    right -= 1
+            start = i+1
+            end = len(nums)-1
+            
+            while start < end:
+                sum = nums[i]+nums[start]+nums[end]
+                if sum < 0:
+                    start+=1
+                elif sum > 0:
+                    end-=1
                 else:
-                    res.append([nums[i], nums[left], nums[right]])
-                    left += 1
-                    right -= 1
-                    while left < right and nums[left] == nums[left - 1]:
-                        left += 1
-                    while left < right and nums[right] == nums[right + 1]:
-                        right -= 1
+                    result.append([nums[i],nums[start],nums[end]])
+
+                    while start < end and nums[start] == nums[start+1]:
+                        start+=1
+                    while start < end and nums[end] == nums[end-1]:
+                        end-=1
+                    
+                    start+=1
+                    end-=1
         
-        return res
+        
+        return result
 
     
 if __name__ == "__main__":

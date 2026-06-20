@@ -5,6 +5,7 @@
 # be given to the top of recursion safely.(no need to use argument, subTree[0])
 
 # Definition for a binary tree node.
+from typing import Optional
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -39,12 +40,31 @@ class Solution:
         return subTree[0]
 
 # Without use of helper fn 
-def isSubtree(self, root, subRoot):
-    if not root:
-        return False
-    if self.isSameTree(root, subRoot):
-        return True
-    return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
+# Covering all edge cases(This IS THE BEST SOLN)
+class Solution:
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        def same_tree(p, q):
+            if not p and not q:
+                return True
+            
+            if (not p and q) or (not q and p):
+                return False
+            
+            if p and q and p.val != q.val:
+                return False
+            
+            return same_tree(p.left, q.left) and same_tree(p.right, q.right)
+        
+        if (not root and subRoot) or (not subRoot and root):
+            return False
+        
+        if not root and not subRoot:
+            return True
+        
+        if same_tree(root, subRoot):
+            return True
+        
+        return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
 
 def main():
     # Example Test Case

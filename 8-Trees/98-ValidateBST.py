@@ -1,9 +1,10 @@
 # Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+from typing import Optional
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 # My appoarch was to traverse every node and check it's root.left.val and root.right.val
 # but here I am only comparing small subtrees seperately, a node in a top will violate the codn of node in bottom
@@ -28,15 +29,17 @@
 
 # Using Recursion
 class Solution:
-    def validBST(self, root, min, max):
-        if not root:
-            return True
-        if root.val >= max or root.val <= min:
-            return False
-        return self.validBST(root.left, min, root.val) and self.validBST(root.right, root.val, max)
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        def validBST(root, min_val, max_val):
+            if not root:
+                return True
+            
+            if root.val <= min_val or root.val >= max_val:
+                return False
+            
+            return validBST(root.left, min_val, root.val) and validBST(root.right, root.val, max_val)
         
-    def isValidBST(self, root):
-        return self.validBST(root, float('-inf'), float('inf'))
+        return validBST(root, float('-inf'), float('inf'))
 
 # Using BFS
 from collections import deque

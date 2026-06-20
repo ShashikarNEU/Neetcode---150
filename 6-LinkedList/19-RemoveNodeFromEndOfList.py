@@ -1,52 +1,39 @@
+# Use dummy node and only consider length = 1 and n = 1 edge case. dummy solves the rest of the edge cases.
+
 # Definition for singly-linked list.
+from typing import Optional
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
         
 class Solution:
-    def deleteFromList(self, head, index, length):
-        if not head:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        dummy = ListNode(-1)
+        dummy.next = head
+        t1 = head
+
+        # Find length of the list
+        length = 0
+        while t1:
+            length += 1
+            t1 = t1.next
+        
+        if length == 1 and n == 1:
             return None
         
-        # List has only one node and we have to delete it
-        if index == 0 and not head.next:
-            head = None
-            return head
+        t2 = dummy
+        for i in range(length-n):
+            t2 = t2.next
         
-        # List has more than one node and index = 0
-        if index == 0 and head.next:
-            temp = head.next
-            head.next = None
-            head = temp
-            return head
+        prev = t2
+        curr = t2.next
+        after = curr.next
 
-        temp = head
-        for i in range(index-1):
-            temp = temp.next
+        prev.next = after
+        curr.next = None
         
-        # Last index case
-        if index == length - 1:
-            temp.next = None
-            return head
-        
-        # General/Middle case
-        current = temp.next
-        node_after = current.next
-        temp.next = node_after
-        current.next = None
-
-        return head
-
-    def removeNthFromEnd(self, head, n):
-        lp = head
-        length = 0
-        while lp:
-            length+=1
-            lp=lp.next
-        print(length)
-        head = self.deleteFromList(head, length - n, length)
-        return head
+        return dummy.next
 
 # Helper function to print the linked list
 def print_linked_list(head):

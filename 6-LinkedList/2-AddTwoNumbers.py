@@ -5,39 +5,43 @@
 # In interview, don't forget to append carry if carry is not 0
 
 # Definition for singly-linked list.
+from typing import Optional
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
     
-class Solution:          
-    def addTwoNumbers(self, l1, l2):        
-        current = ListNode() # Dummy node
-        head = current
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        t1 = l1
+        t2 = l2
         carry = 0
-        val1 = 0
-        val2 = 0
+        dummy = ListNode(-1)
+        t3 = dummy
 
-        while l1 or l2:
-            val1 = l1.val if l1 else 0
-            val2 = l2.val if l2 else 0
+        while t1 or t2:
+            v1 = 0 if not t1 else t1.val
+            v2 = 0 if not t2 else t2.val
 
-            total = val1 + val2 + carry
-            result = total % 10
-            carry = total // 10 if total > 9 else 0
-            node = ListNode(result)
-            current.next = node
-            current = node
+            res = v1 + v2 + carry
+            carry = res // 10
+            v3 = res % 10
 
-            l1=l1.next if l1 else None
-            l2=l2.next if l2 else None
+            new_node = ListNode(v3)
+            t3.next = new_node
+            t3 = new_node
+
+            if t1:
+                t1 = t1.next
+            if t2:
+                t2 = t2.next
         
         if carry != 0:
-            node = ListNode(carry)
-            current.next = node
-            current = node
-      
-        return head.next # skip dummy node
+            new_node = ListNode(carry)
+            t3.next = new_node
+            t3 = new_node
+        
+        return dummy.next
                 
 
              

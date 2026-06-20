@@ -21,20 +21,20 @@ def max_sum_subarr(arr,k):
 # Variable-Size (Dynamic) Sliding Window
 # When the window size is not fixed and depends on meeting a specific condition 
 # (e.g., achieving a certain sum, containing unique characters, etc.).
-# Use two pointers, p1 and p2, starting from index 0, keep on incrementing p2 and keep on adding the elements to the window,
-# if the condn is not met, keep on incrementing p1 and removing the elements from the window until the condn is met
-# Have max_len to store the max window size
+# Have p1 at 0 and p2 at 1. keep on incrementing p2 as long as the profit is positive. if profit is negative, that means that  new lowest has found
+# so, make p1 = p2 and increment p2. repeat this process while recording maxProfit.
 
 # Example Problem: Best Time to buy and sell stock - https://www.youtube.com/watch?v=GaXwHThEgGk&t=56s
 def maxProfit(self, prices: list[int]) -> int:
     p1 = 0
-    p2 = 0
+    p2 = 1
     profit = 0
     max_profit = 0
     while p2 < len(prices):
-        while prices[p2]-prices[p1] < 0:
-            p1+=1
-        profit = prices[p2]-prices[p1]
-        max_profit = max(profit, max_profit)
+        if prices[p2]-prices[p1] > 0:
+            profit = prices[p2]-prices[p1]
+            max_profit = max(profit, max_profit)
+        else:
+            p1 = p2
         p2+=1
     return max_profit

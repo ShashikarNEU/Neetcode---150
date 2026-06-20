@@ -1,16 +1,21 @@
+from ast import List
 class Solution:
-    def maxProfit(self, prices: list[int]) -> int:
+    def maxProfit(self, prices: List[int]) -> int:
         p1 = 0
-        p2 = 0
+        p2 = 1
         profit = 0
-        max_profit = 0
+        maxProfit = 0
+        
         while p2 < len(prices):
-            while prices[p2]-prices[p1] < 0:
-                p1+=1
-            profit = prices[p2]-prices[p1]
-            max_profit = max(profit, max_profit)
+            if prices[p2]-prices[p1] > 0:
+                profit = prices[p2]-prices[p1]
+                maxProfit = max(maxProfit, profit)
+            else:
+                p1 = p2
+
             p2+=1
-        return max_profit
+        
+        return maxProfit
 
 if __name__ == "__main__":
   s = Solution()

@@ -28,24 +28,28 @@ class Solution:
 # Other Attempt
 class Solution:
     def isValid(self, s: str) -> bool:
-        hashMap = {"]":"[", ")":"(", "}":"{"}
+        hashMap = {'{':'}', '[':']','(':')'} # hashmap
         stack = []
 
-        for string in s:
-            if string == "}" or string == "]" or string == ")":
+        if s == '':
+            return False
+
+        for st in s:
+            if st in hashMap:
+                stack.append(st)
+            else:
                 if not stack:
                     return False
-                elif stack[-1] != hashMap[string]:
-                    return False
-                else:
+                
+                if st == hashMap[stack[-1]]:
                     stack.pop()
-                    
-            else:
-                stack.append(string)
+                else:
+                    return False
         
-
-
-        return True if not stack else False
+        if not stack:
+            return True
+        
+        return False
 
 
 

@@ -40,6 +40,35 @@ def hasCycle(head):
     fast = fast.next.next
   return False
 
+
+# Other Attempt
+class Solution:
+    def findDuplicate(self, nums: list[int]) -> int:
+        # Floyd cycle detection
+        slow = 0
+        fast = 0
+
+        # Find the intersection point in the cycle
+        while True:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+
+            if fast == slow:
+                break
+        
+        # Find the start of the cycle
+        t1 = slow
+        t2 = 0
+
+        while True:
+            t1 = nums[t1]
+            t2 = nums[t2]
+
+            if t1 == t2:
+                break
+        
+        return t1
+
 if __name__ == "__main__":
   # Sorted Two Sum
   list1 = [1,2,3,4,5,6,7]
